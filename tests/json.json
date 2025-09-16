@@ -1,0 +1,82 @@
+{
+  "content": "# 使用 Milvus 构建推荐系统\n\n[Milvus](https://milvus.io/) 是一个开源的向量数据库，专门用于高效存储和检索大规模向量数据。在推荐系统中，它非常适合用于处理物品和用户的向量表示，实现快速相似性搜索。\n\n## Milvus 在推荐系统中的核心作用\n\n### 1. 向量相似性搜索\n- 将用户偏好和物品特征表示为向量\n- 通过近似最近邻(ANN)搜索找到最相似的物品\n- 支持多种相似度度量：欧氏距离、内积、余弦相似度等\n\n### 2. 推荐系统架构中的位置\n```\n用户行为 → 特征工程 → 向量生成 → Milvus(存储/检索) → 推荐结果\n```\n\n## 实现步骤\n\n### 1. 数据准备与向量化\n```python\n# 示例：使用深度学习模型生成物品向量\nfrom sentence_transformers import SentenceTransformer\n\nmodel = SentenceTransformer('all-MiniLM-L6-v2')\nitem_descriptions = [\"产品描述1\", \"产品描述2\", ...]\nitem_vectors = model.encode(item_descriptions)\n```\n\n### 2. Milvus 集合创建与数据插入\n```python\nfrom pymilvus import connections, FieldSchema, CollectionSchema, DataType, Collection\n\n# 连接 Milvus\nconnections.connect(\"default\", host=\"localhost\", port=\"19530\")\n\n# 定义集合模式\nfields = [\n    FieldSchema(name=\"id\", dtype=DataType.INT64, is_primary=True),\n    FieldSchema(name=\"vector\", dtype=DataType.FLOAT_VECTOR, dim=384),\n    FieldSchema(name=\"metadata\", dtype=DataType.JSON)\n]\nschema = CollectionSchema(fields, \"recommendation_system\")\ncollection = Collection(\"recommendations\", schema)\n\n# 插入数据\nentities = [\n    [i for i in range(len(item_vectors))],  # IDs\n    item_vectors,                           # 向量\n    [{\"title\": title, \"category\": category} for title, category in metadata]  # 元数据\n]\ncollection.insert(entities)\ncollection.create_index(\"vector\", {\"index_type\": \"IVF_FLAT\", \"metric_type\": \"L2\", \"params\": {\"nlist\": 128}})\n```\n\n### 3. 实现推荐查询\n```python\ndef get_recommendations(user_vector, top_k=10):\n    collection.load()\n    \n    # 搜索相似物品\n    search_params = {\"metric_type\": \"L2\", \"params\": {\"nprobe\": 10}}\n    results = collection.search(\n        [user_vector], \n        \"vector\", \n        search_params, \n        limit=top_k, \n        output_fields=[\"metadata\"]\n    )\n    \n    # 处理结果\n    recommendations = []\n    for hit in results[0]:\n        item_id = hit.id\n        score = hit.score\n        metadata = hit.entity.get('metadata')\n        recommendations.append({\"id\": item_id, \"score\": score, \"metadata\": metadata})\n    \n    return recommendations\n```\n\n### 4. 混合推荐策略\n```python\ndef hybrid_recommendation(user_id, user_vector, top_k=20):\n    # 基于向量的相似推荐\n    vector_recs = get_recommendations(user_vector, top_k*2)\n    \n    # 结合业务规则过滤（如品类偏好、价格区间等）\n    filtered_recs = apply_business_rules(vector_recs, user_id)\n    \n    # 多样性控制，避免过于相似的结果\n    final_recs = diversify_recommendations(filtered_recs, top_k)\n    \n    return final_recs\n```\n\n## 部署考虑\n\n### 1. 性能优化\n- 根据数据量选择合适的索引类型（IVF_FLAT、HNSW、DISKANN等）\n- 调整索引参数平衡精度和速度\n- 使用分区提高查询效率\n\n### 2. 可扩展性\n- 分布式部署处理大规模数据\n- 读写分离架构\n- 自动负载均衡\n\n### 3. 实时更新\n- 支持增量更新用户偏好向量\n- 近实时索引刷新机制\n\n## 优势与挑战\n\n### 优势：\n- 极高的检索速度，支持毫秒级响应\n- 优秀的可扩展性，支持十亿级向量\n- 灵活的相似度度量方式\n- 丰富的客户端支持（Python、Java、Go等）\n\n### 挑战：\n- 需要额外的特征工程和向量化流程\n- 冷启动问题需要额外处理\n- 需要调整参数以达到最佳性能\n\n## 总结\n\nMilvus 为推荐系统提供了强大的向量检索能力，特别适合需要处理大规模物品库和实时推荐的场景。通过将推荐问题转化为向量相似性搜索问题，可以构建高效、可扩展的推荐系统。实际应用中，通常需要将向量检索与其他推荐技术（如规则过滤、多样性控制）结合使用，以获得更好的推荐",
+  "content_type": "str",
+  "metrics": {
+    "input_tokens": [
+      52
+    ],
+    "output_tokens": [
+      1056
+    ],
+    "total_tokens": [
+      1108
+    ],
+    "audio_tokens": [
+      0
+    ],
+    "input_audio_tokens": [
+      0
+    ],
+    "output_audio_tokens": [
+      0
+    ],
+    "cached_tokens": [
+      0
+    ],
+    "cache_write_tokens": [
+      0
+    ],
+    "reasoning_tokens": [
+      0
+    ],
+    "prompt_tokens": [
+      52
+    ],
+    "completion_tokens": [
+      1056
+    ],
+    "time": [
+      32.19875275800587
+    ]
+  },
+  "model": "deepseek-v3.1",
+  "model_provider": "Dashscope",
+  "run_id": "a0b76926-799c-47b4-8967-910d49b002a5",
+  "agent_id": "basic_agent",
+  "agent_name": "Basic Agent",
+  "session_id": "1d5063f5-5cc6-4452-9dc5-dcdabf7adb0d",
+  "created_at": 1756637933,
+  "status": "RUNNING",
+  "messages": [
+    {
+      "content": "<additional_information>\n- Use markdown to format your answers.\n- The current time is 2025-08-31 19:01:12.543305.\n</additional_information>",
+      "from_history": false,
+      "stop_after_tool_call": false,
+      "role": "system",
+      "created_at": 1756638072
+    },
+    {
+      "content": "说说milvus怎么做推荐系统",
+      "from_history": false,
+      "stop_after_tool_call": false,
+      "role": "user",
+      "created_at": 1756638072
+    },
+    {
+      "content": "# 使用 Milvus 构建推荐系统\n\n[Milvus](https://milvus.io/) 是一个开源的向量数据库，专门用于高效存储和检索大规模向量数据。在推荐系统中，它非常适合用于处理物品和用户的向量表示，实现快速相似性搜索。\n\n## Milvus 在推荐系统中的核心作用\n\n### 1. 向量相似性搜索\n- 将用户偏好和物品特征表示为向量\n- 通过近似最近邻(ANN)搜索找到最相似的物品\n- 支持多种相似度度量：欧氏距离、内积、余弦相似度等\n\n### 2. 推荐系统架构中的位置\n```\n用户行为 → 特征工程 → 向量生成 → Milvus(存储/检索) → 推荐结果\n```\n\n## 实现步骤\n\n### 1. 数据准备与向量化\n```python\n# 示例：使用深度学习模型生成物品向量\nfrom sentence_transformers import SentenceTransformer\n\nmodel = SentenceTransformer('all-MiniLM-L6-v2')\nitem_descriptions = [\"产品描述1\", \"产品描述2\", ...]\nitem_vectors = model.encode(item_descriptions)\n```\n\n### 2. Milvus 集合创建与数据插入\n```python\nfrom pymilvus import connections, FieldSchema, CollectionSchema, DataType, Collection\n\n# 连接 Milvus\nconnections.connect(\"default\", host=\"localhost\", port=\"19530\")\n\n# 定义集合模式\nfields = [\n    FieldSchema(name=\"id\", dtype=DataType.INT64, is_primary=True),\n    FieldSchema(name=\"vector\", dtype=DataType.FLOAT_VECTOR, dim=384),\n    FieldSchema(name=\"metadata\", dtype=DataType.JSON)\n]\nschema = CollectionSchema(fields, \"recommendation_system\")\ncollection = Collection(\"recommendations\", schema)\n\n# 插入数据\nentities = [\n    [i for i in range(len(item_vectors))],  # IDs\n    item_vectors,                           # 向量\n    [{\"title\": title, \"category\": category} for title, category in metadata]  # 元数据\n]\ncollection.insert(entities)\ncollection.create_index(\"vector\", {\"index_type\": \"IVF_FLAT\", \"metric_type\": \"L2\", \"params\": {\"nlist\": 128}})\n```\n\n### 3. 实现推荐查询\n```python\ndef get_recommendations(user_vector, top_k=10):\n    collection.load()\n    \n    # 搜索相似物品\n    search_params = {\"metric_type\": \"L2\", \"params\": {\"nprobe\": 10}}\n    results = collection.search(\n        [user_vector], \n        \"vector\", \n        search_params, \n        limit=top_k, \n        output_fields=[\"metadata\"]\n    )\n    \n    # 处理结果\n    recommendations = []\n    for hit in results[0]:\n        item_id = hit.id\n        score = hit.score\n        metadata = hit.entity.get('metadata')\n        recommendations.append({\"id\": item_id, \"score\": score, \"metadata\": metadata})\n    \n    return recommendations\n```\n\n### 4. 混合推荐策略\n```python\ndef hybrid_recommendation(user_id, user_vector, top_k=20):\n    # 基于向量的相似推荐\n    vector_recs = get_recommendations(user_vector, top_k*2)\n    \n    # 结合业务规则过滤（如品类偏好、价格区间等）\n    filtered_recs = apply_business_rules(vector_recs, user_id)\n    \n    # 多样性控制，避免过于相似的结果\n    final_recs = diversify_recommendations(filtered_recs, top_k)\n    \n    return final_recs\n```\n\n## 部署考虑\n\n### 1. 性能优化\n- 根据数据量选择合适的索引类型（IVF_FLAT、HNSW、DISKANN等）\n- 调整索引参数平衡精度和速度\n- 使用分区提高查询效率\n\n### 2. 可扩展性\n- 分布式部署处理大规模数据\n- 读写分离架构\n- 自动负载均衡\n\n### 3. 实时更新\n- 支持增量更新用户偏好向量\n- 近实时索引刷新机制\n\n## 优势与挑战\n\n### 优势：\n- 极高的检索速度，支持毫秒级响应\n- 优秀的可扩展性，支持十亿级向量\n- 灵活的相似度度量方式\n- 丰富的客户端支持（Python、Java、Go等）\n\n### 挑战：\n- 需要额外的特征工程和向量化流程\n- 冷启动问题需要额外处理\n- 需要调整参数以达到最佳性能\n\n## 总结\n\nMilvus 为推荐系统提供了强大的向量检索能力，特别适合需要处理大规模物品库和实时推荐的场景。通过将推荐问题转化为向量相似性搜索问题，可以构建高效、可扩展的推荐系统。实际应用中，通常需要将向量检索与其他推荐技术（如规则过滤、多样性控制）结合使用，以获得更好的推荐",
+      "from_history": false,
+      "stop_after_tool_call": false,
+      "role": "assistant",
+      "metrics": {
+        "input_tokens": 52,
+        "output_tokens": 1056,
+        "total_tokens": 1108,
+        "prompt_tokens": 52,
+        "completion_tokens": 1056,
+        "time": 32.19875275800587
+      },
+      "created_at": 1756638072
+    }
+  ],
+  "tools": []
+}
