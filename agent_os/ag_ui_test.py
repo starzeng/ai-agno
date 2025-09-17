@@ -26,4 +26,4 @@ if __name__ == "__main__":
     http://localhost:9001/config
 
     """
-    agent_os.serve(app="basic:app", reload=True, port=9001)
+    agent_os.serve(app="ag_ui_test:app", reload=True, port=9001)
