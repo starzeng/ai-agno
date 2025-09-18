@@ -7,6 +7,12 @@ QWEN3_MAX_PREVIEW = DashScope(
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
+QWEN3_235B_A22B_INSTRUCT_2507 = DashScope(
+    id="qwen3-235b-a22b-instruct-2507",
+    api_key="sk-c18bd21e962b4de887a8e8a264ed149a",
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+)
+
 TEXT_EMBEDDING_V4 = OpenAIEmbedder(
     id="text-embedding-v4",
     api_key="sk-c18bd21e962b4de887a8e8a264ed149a",

@@ -1,12 +1,11 @@
+import dataclasses
 from textwrap import dedent
 from typing import List
 
 from agno.agent import Agent, RunOutput  # noqa
-from agno.models.openai import OpenAIChat
 from pydantic import BaseModel, Field
 
-from models.models import QWEN3_MAX_PREVIEW
-
+from models.models import QWEN3_235B_A22B_INSTRUCT_2507
 
 class MovieScript(BaseModel):
     setting: str = Field(
@@ -38,38 +37,32 @@ class MovieScript(BaseModel):
 # Agent that uses JSON mode
 # 使用JSON模式的代理
 json_mode_agent = Agent(
-    model=QWEN3_MAX_PREVIEW,
+    model=QWEN3_235B_A22B_INSTRUCT_2507,
     description=dedent("""\
-        你是一位著名的 Hollywood 编剧，以创作难忘的大片而闻名！🎬
-        结合了 Christopher Nolan、Aaron Sorkin 和 Quentin Tarantino 的叙事能力，
+        你是一位著名的电影编剧，以创作难忘的大片而闻名！🎬
         你创作出能吸引全球观众的独特故事。
-
         你的专长是将地点转化为推动叙事的活生生的角色。\
     """),
     instructions=dedent("""\
         在创作电影概念时，遵循以下原则：
-
         1. 地点应该是角色：
            - 用感官细节让地点活起来
            - 包括影响故事的大气元素
            - 考虑时间 period 对叙事的影响
-
         2. 角色发展：
            - 给每个角色独特的声音和明确的动机
            - 创造引人入胜的关系和冲突
            - 确保多样化的表现和真实的背景
-
         3. 故事结构：
            - 以抓住注意力的钩子开始
            - 通过升级的冲突建立紧张感
            - 提供令人惊讶但不可避免的结局
-
         4. 类型掌握：
            - 拥抱类型惯例同时添加新鲜的转折
            - 深思熟虑地混合类型以获得独特的组合
            - 始终保持一致的基调
-
-        将每个地点转化为难忘的电影体验！\
+        将每个地点转化为难忘的电影体验！
+        请严格用 JSON 格式输出结果。\
     """),
     output_schema=MovieScript,
     use_json_mode=True,
@@ -80,7 +73,7 @@ json_mode_agent = Agent(
 # Agent that uses structured outputs
 # 使用结构化输出的代理
 structured_output_agent = Agent(
-    model=QWEN3_MAX_PREVIEW,
+    model=QWEN3_235B_A22B_INSTRUCT_2507,
     description=dedent("""\
         你是一位著名的 Hollywood 编剧，以创作难忘的大片而闻名！🎬
         结合了 Christopher Nolan、Aaron Sorkin 和 Quentin Tarantino 的叙事能力，
@@ -111,10 +104,10 @@ structured_output_agent = Agent(
            - 深思熟虑地混合类型以获得独特的组合
            - 始终保持一致的基调
 
-        将每个地点转化为难忘的电影体验！\
+        将每个地点转化为难忘的电影体验！
+        必须按照严格的 JSON 格式输出.\
     """),
     output_schema=MovieScript,
-    # use_json_mode=True,
     debug_mode=True,
     debug_level=2,
 )
