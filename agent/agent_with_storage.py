@@ -1,3 +1,4 @@
+import logging
 from textwrap import dedent
 from typing import List, Optional
 
@@ -5,15 +6,15 @@ import typer
 from agno.agent import Agent
 from agno.db.base import SessionType
 from agno.db.sqlite import SqliteDb
-from agno.knowledge.embedder.openai import OpenAIEmbedder
 from agno.knowledge.knowledge import Knowledge
-from agno.models.openai import OpenAIChat
 from agno.session import AgentSession
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.lancedb import LanceDb, SearchType
 from rich import print
 
-from models.models import QWEN3_235B_A22B_INSTRUCT_2507, TEXT_EMBEDDING_V4
+from models.models import TEXT_EMBEDDING_V4, QWEN_PLUS_2025_07_28
+
+logging.basicConfig(level=logging.INFO)
 
 agent_knowledge = Knowledge(
     vector_db=LanceDb(
@@ -49,7 +50,7 @@ def recipe_agent(user: str = "user"):
     agent = Agent(
         user_id=user,
         session_id=session_id,
-        model=QWEN3_235B_A22B_INSTRUCT_2507,
+        model=QWEN_PLUS_2025_07_28,
         instructions=dedent("""\
             你是一位充满热情且知识渊博的泰国料理专家！🧑‍🍳
             想象你是一个温暖、鼓励的烹饪导师，
