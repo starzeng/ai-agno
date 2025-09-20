@@ -8,11 +8,24 @@ dotenv.load_dotenv()
 API_KEY = os.getenv("API_KEY")
 BASE_URL = os.getenv("BASE_URL")
 
+QWEN_IMAGE = DashScope(
+    id="qwen-image",
+    api_key=API_KEY,
+    base_url="https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+)
+
+QWEN_OMNI_TURBO_2025_03_26 = DashScope(
+    id="qwen-omni-turbo-2025-03-26",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+)
+
 QWEN_PLUS_2025_07_28 = DashScope(
     id="qwen-plus-2025-07-28",
     api_key=API_KEY,
     base_url=BASE_URL,
-    enable_thinking=False
+    enable_thinking=False,
+    temperature=0,
 )
 
 QWEN_VL_PLUS_2025_08_15 = DashScope(
