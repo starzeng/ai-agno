@@ -1,6 +1,7 @@
 import logging
 import os
 from typing import Optional
+from uuid import uuid4
 
 import dotenv
 from agno.media import Image
@@ -25,9 +26,9 @@ class QwenImageTools(Toolkit):
         if not self.api_key:
             raise ValueError("DASHSCOPE_API_KEY is required")
 
-        self.register(self.generate_image)
+        self.register(self.create_image)
 
-    def generate_image(self, prompt: str, ) -> ToolResult | None:
+    def create_image(self, prompt: str, ) -> ToolResult | None:
         """使用Qwen-Image生成图片
 
         Args:
@@ -60,17 +61,26 @@ class QwenImageTools(Toolkit):
         )
 
         if response.status_code == 200:
-            images = []
+            generated_images = []
+            response_str = ""
             for choice in response.output.choices:
-                for url in choice.message.content:
-                    images.append(Image(url=url))
+                for image in choice.message.content:
+                    url = image.get('image')
+                    if url:
+                        image = Image(
+                            id=str(uuid4()),
+                            url=url,
+                            original_prompt=prompt,
+                        )
+                        generated_images.append(image)
+                        response_str += f"Image has been generated at the URL {url}\n"
             return ToolResult(
-                content=prompt,
-                images=images
+                content=response_str or "No images were generated",
+                images=generated_images if generated_images else None,
             )
         else:
             logger.debug(f"HTTP返回码：{response.status_code}")
             logger.debug(f"错误码：{response.code}")
             logger.debug(f"错误信息：{response.message}")
             logger.debug("请参考文档：https://help.aliyun.com/zh/model-studio/developer-reference/error-code")
-            return None
+            return ToolResult(content="图片生成失败")

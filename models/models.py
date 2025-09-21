@@ -14,6 +14,13 @@ QWEN_IMAGE = DashScope(
     base_url="https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
 )
 
+QWEN_PLUS_2025_04_28 = DashScope(
+    id="qwen-plus-2025-04-28",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+    enable_thinking=False,
+    temperature=0.3,
+)
 QWEN_OMNI_TURBO_2025_03_26 = DashScope(
     id="qwen-omni-turbo-2025-03-26",
     api_key=API_KEY,
@@ -25,7 +32,7 @@ QWEN_PLUS_2025_07_28 = DashScope(
     api_key=API_KEY,
     base_url=BASE_URL,
     enable_thinking=False,
-    temperature=0,
+    temperature=0.3,
 )
 
 QWEN_VL_PLUS_2025_08_15 = DashScope(
