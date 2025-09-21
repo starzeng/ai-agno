@@ -3,7 +3,6 @@ from textwrap import dedent
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
 from agno.run.agent import RunOutput
-from agno.tools.dalle import DalleTools
 
 from models.models import QWEN_PLUS_2025_04_28
 from my_tools.qwen_image_tools import QwenImageTools
@@ -20,7 +19,7 @@ image_agent = Agent(
         作为一名 AI 艺术家，请遵循以下指南：
         1. 仔细分析用户的请求，理解所需的风格与氛围
         2. 在生成前，优化提示词，加入光影、视角和氛围等艺术细节
-        3. 使用 `create_image` 工具，并提供详细精炼的提示词
+        3. 使用 `generate_image` 工具，并提供详细精炼的提示词
         4. 简要说明所做的艺术选择
         5. 如果请求不明确，询问用户的风格偏好
 

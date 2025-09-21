@@ -26,9 +26,9 @@ class QwenImageTools(Toolkit):
         if not self.api_key:
             raise ValueError("DASHSCOPE_API_KEY is required")
 
-        self.register(self.create_image)
+        self.register(self.generate_image)
 
-    def create_image(self, prompt: str, ) -> ToolResult | None:
+    def generate_image(self, prompt: str, ) -> ToolResult | None:
         """使用Qwen-Image生成图片
 
         Args:
