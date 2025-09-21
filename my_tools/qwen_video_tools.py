@@ -59,13 +59,13 @@ class QwenVideoTools(Toolkit):
             rsp = VideoSynthesis.call(**params)
             logger.info(f"DashScope API 调用结果: {rsp}")
 
-            generated_videos = []
             if rsp.status_code == HTTPStatus.OK:
                 video_url = rsp.output.video_url
                 original_prompt = rsp.output.orig_prompt
                 revised_prompt = rsp.output.actual_prompt
                 logger.info(f"视频生成成功: {video_url}")
                 response_str = f"视频生成成功！\n视频URL: {video_url}\n提示词: {prompt}\n尺寸: {size}"
+                generated_videos = []
                 video = Video(
                     id=str(uuid4()),
                     url=video_url,

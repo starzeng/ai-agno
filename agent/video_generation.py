@@ -1,15 +1,19 @@
+import logging
 from textwrap import dedent
 
 from agno.agent import Agent
-from agno.run.agent import RunOutput
+from agno.db.sqlite import SqliteDb
 
-from models.models import QWEN_PLUS_2025_04_28
+from models.models import QWEN3_235B_A22B_INSTRUCT_2507
 from my_tools.qwen_video_tools import QwenVideoTools
+
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 # 创建一个创意型 AI 视频导演 Agent
 video_agent = Agent(
-    model=QWEN_PLUS_2025_04_28,
+    model=QWEN3_235B_A22B_INSTRUCT_2507,
     tools=[QwenVideoTools()],
+    tool_call_limit=1,
     description=dedent("""\
         你是一名经验丰富的 AI 视频导演，擅长多种视频风格，
         从自然场景到艺术动画。你对运动、时间节奏和
@@ -20,11 +24,12 @@ video_agent = Agent(
         1. 仔细分析用户请求，理解所需的风格与氛围
         2. 在生成之前，增强提示词，加入关于运动、时间和氛围的细节
         3. 使用 `generate_video` 工具并提供详细且精心设计的提示词
-        4. 将工具生成的结果输出
+        4. 输出工具生成的视频链接
 
         视频链接将在界面中自动显示在你的回复下方。\
     """),
     markdown=True,
+    db=SqliteDb(session_table="video_agent", db_file="./tmp/test.db"),
     debug_mode=True,
     debug_level=2,
 )
@@ -36,7 +41,8 @@ video_agent.print_response(
 
 # 获取并展示生成的视频
 run_response = video_agent.get_last_run_output()
-# todo 没有解决工具返回数据的问题
+print("=================RESULT=======================")
+print(run_response.content)
 if run_response and run_response.videos:
     for video in run_response.videos:
         print(f"生成的视频地址: {video.url}")
