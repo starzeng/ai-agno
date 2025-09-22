@@ -8,6 +8,15 @@ dotenv.load_dotenv()
 API_KEY = os.getenv("API_KEY")
 BASE_URL = os.getenv("BASE_URL")
 
+QWEN_PLUS_2025_07_14 = DashScope(
+    id="qwen-plus-2025-07-14",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+    # modalities=["text", "audio"],
+    # audio={"voice": "Cherry", "format": "wav"},
+    enable_thinking=False,
+    temperature=0.3,
+)
 QWEN_OMNI_TURBO_2025_03_26 = DashScope(
     id="qwen-omni-turbo-2025-03-26",
     api_key=API_KEY,
