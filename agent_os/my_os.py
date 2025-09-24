@@ -1,5 +1,7 @@
 from agno.agent import Agent
 from agno.os import AgentOS
+from agno.os.config import AgentOSConfig
+from agno.os.settings import AgnoAPISettings
 from fastapi.middleware.cors import CORSMiddleware
 
 from models.models import QWEN3_MAX_PREVIEW
@@ -16,7 +18,11 @@ agent_os = AgentOS(
     os_id="my-first-os",
     description="My first AgentOS",
     agents=[assistant],
-
+    config=AgentOSConfig(),
+    settings=AgnoAPISettings(
+        os_security_key="123123",
+    ),
+    telemetry=False,
 )
 
 app = agent_os.get_app()
@@ -30,4 +36,8 @@ app.add_middleware(
 )
 
 if __name__ == "__main__":
-    agent_os.serve(app="my_os:app", port=7777, reload=False)
+    agent_os.serve(
+        app="my_os:app",
+        port=8888,
+        reload=False
+    )
