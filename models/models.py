@@ -8,6 +8,14 @@ dotenv.load_dotenv()
 API_KEY = os.getenv("API_KEY")
 BASE_URL = os.getenv("BASE_URL")
 
+QWEN3_OMNI_FLASH_2025_09_15 = DashScope(
+    id="qwen3-omni-flash-2025-09-15",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+    enable_thinking=False,
+    temperature=0.7,
+)
+
 QWEN_PLUS_2025_07_14 = DashScope(
     id="qwen-plus-2025-07-14",
     api_key=API_KEY,
