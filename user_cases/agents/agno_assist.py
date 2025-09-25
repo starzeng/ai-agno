@@ -11,7 +11,7 @@ db_url = "postgresql+psycopg://ai:ai@localhost:5432/ai"
 vector_db = PgVector(
     table_name="vectors",
     db_url=db_url,
-    search_type=SearchType.hybrid,
+    search_type=SearchType.vector,
     embedder=BGE_M3,
 )
 
@@ -37,10 +37,17 @@ agno_assist = Agent(
     knowledge=knowledge,
     db=db,
     add_history_to_context=True,
+    add_memories_to_context=True,
+    add_session_state_to_context=True,
+    add_session_summary_to_context=True,
     add_datetime_to_context=True,
+    add_knowledge_to_context=True,
+    add_name_to_context=True,
+    enable_user_memories=True,
+    enable_agentic_memory=True,
     markdown=True,
     stream=True,
-    debug_mode=True,
+    # debug_mode=True,
     telemetry=False,
 )
 
