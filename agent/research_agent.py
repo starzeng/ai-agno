@@ -71,7 +71,7 @@ agent = Agent(
     """),
     markdown=True,
     add_datetime_to_context=True,
-    save_response_to_file="tmp/{message}.md",
+    save_response_to_file="./tmp/{message}.md",
     debug_mode=True,
     # debug_level=2,
 )
