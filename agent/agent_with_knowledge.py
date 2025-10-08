@@ -2,7 +2,6 @@ from textwrap import dedent
 
 from agno.agent import Agent
 from agno.knowledge.knowledge import Knowledge
-from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.lancedb import LanceDb, SearchType
 
 from models.gpu_stack import BGE_M3
@@ -23,9 +22,7 @@ knowledge.add_content(
 
 agent = Agent(
     model=QWEN_PLUS_2025_07_28,
-    instructions=dedent("""\
-    agno 框架编程专家\
-    """),
+    instructions=dedent("""agno 框架编程专家"""),
     knowledge=knowledge,
     search_knowledge=True,
     # tools=[DuckDuckGoTools()],
