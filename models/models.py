@@ -107,6 +107,12 @@ QWEN3_MAX_PREVIEW = DashScope(
     base_url=BASE_URL,
 )
 
+QWEN3_MAX = DashScope(
+    id="qwen3-max",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+)
+
 QWEN3_235B_A22B_INSTRUCT_2507 = DashScope(
     id="qwen3-235b-a22b-instruct-2507",
     api_key=API_KEY,
