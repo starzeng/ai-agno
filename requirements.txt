@@ -1,5 +1,5 @@
 ag-ui-protocol==0.1.9
-agno==2.1.7
+agno==2.1.8
 agno-infra==1.0.4
 aiofiles==25.1.0
 aiosqlite==0.21.0
@@ -31,10 +31,12 @@ psycopg==3.2.10
 psycopg-binary==3.2.10
 psycopg2-binary==2.9.10
 pycountry==24.6.1
+pymilvus==2.6.2
 PyMySQL==1.1.2
 pyOpenSSL==25.3.0
 pypdf==6.1.0
 rank-bm25==0.2.2
+reportlab==4.4.4
 snowballstemmer==2.2.0
 socksio==1.0.0
 tantivy==0.25.0
