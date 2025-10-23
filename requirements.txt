@@ -1,5 +1,5 @@
 ag-ui-protocol==0.1.9
-agno==2.1.8
+agno==2.2.0
 agno-infra==1.0.4
 aiofiles==25.1.0
 aiosqlite==0.21.0
@@ -28,7 +28,7 @@ patchright==1.55.2
 pgvector==0.4.1
 pip==25.2
 psutil==7.1.0
-psycopg==3.2.10
+psycopg==3.2.11
 psycopg-binary==3.2.10
 psycopg2-binary==2.9.10
 pycountry==24.6.1
