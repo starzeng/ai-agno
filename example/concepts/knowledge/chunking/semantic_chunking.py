@@ -16,16 +16,18 @@ vector_db = Milvus(
 knowledge = Knowledge(
     vector_db=vector_db,
 )
-# asyncio.run(knowledge.add_content_async(
-#     url="https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf",
-#     # reader=PDFReader(
-#     #     name="Semantic Chunking Reader",
-#     #     chunking_strategy=SemanticChunking(
-#     #         embedder=TEXT_EMBEDDING_V4,
-#     #         similarity_threshold=0.5,
-#     #     ),
-#     # ),
-# ))
+asyncio.run(
+    knowledge.add_content_async(
+        path="./大数据风控实战课程.pdf",
+        reader=PDFReader(
+            name="Semantic Chunking Reader",
+            chunking_strategy=SemanticChunking(
+                embedder=TEXT_EMBEDDING_V4,
+                similarity_threshold=0.5,
+            ),
+        ),
+    )
+)
 
 agent = Agent(
     model=QWEN3_MAX,
@@ -38,4 +40,4 @@ agent = Agent(
     debug_mode=True,
 )
 
-agent.print_response("椰奶鸡汤如何做?", markdown=True)
+agent.print_response("风控是啥?", markdown=True)

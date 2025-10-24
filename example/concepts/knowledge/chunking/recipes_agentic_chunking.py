@@ -1,4 +1,5 @@
 import asyncio
+
 from agno.agent import Agent
 from agno.knowledge.chunking.agentic import AgenticChunking
 from agno.knowledge.knowledge import Knowledge
@@ -16,15 +17,17 @@ knowledge = Knowledge(
     vector_db=vector_db
 )
 
-asyncio.run(knowledge.add_content_async(
-    url="https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf",
-    reader=PDFReader(
-        name="Agentic Chunking Reader",
-        chunking_strategy=AgenticChunking(
-            model=QWEN3_MAX,
+asyncio.run(
+    knowledge.add_contents_async(
+        paths=["./大数据风控实战课程.pdf"],
+        reader=PDFReader(
+            name="Agentic Chunking Reader",
+            chunking_strategy=AgenticChunking(
+                model=QWEN3_MAX,
+            ),
         ),
-    ),
-))
+    )
+)
 
 agent = Agent(
     model=QWEN3_MAX,
@@ -35,4 +38,4 @@ agent = Agent(
     debug_level=2,
 )
 
-agent.print_response("有哪些太过菜?", markdown=True)
+agent.print_response("风控是啥?", markdown=True)

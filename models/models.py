@@ -1,8 +1,9 @@
 import os
 
 import dotenv
-from agno.knowledge.embedder.openai import OpenAIEmbedder
 from agno.models.dashscope import DashScope
+
+from example.concepts.knowledge.dashscop_embedder import DashScopeEmbedder
 
 dotenv.load_dotenv()
 API_KEY = os.getenv("API_KEY")
@@ -119,9 +120,9 @@ QWEN3_235B_A22B_INSTRUCT_2507 = DashScope(
     base_url=BASE_URL,
 )
 
-TEXT_EMBEDDING_V4 = OpenAIEmbedder(
+TEXT_EMBEDDING_V4 = DashScopeEmbedder(
     id="text-embedding-v4",
     api_key=API_KEY,
     base_url=BASE_URL,
-    dimensions=1024,
+    dimensions=128,
 )
