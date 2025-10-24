@@ -17,7 +17,7 @@ knowledge = Knowledge(
 )
 
 asyncio.run(knowledge.add_content_async(
-    path="./第一性原理.md",
+    path="../第一性原理.md",
     reader=MarkdownReader(
         name="Markdown Chunking Reader",
         chunking_strategy=MarkdownChunking(chunk_size=100, overlap=20),

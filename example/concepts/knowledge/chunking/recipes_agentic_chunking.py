@@ -19,7 +19,7 @@ knowledge = Knowledge(
 
 asyncio.run(
     knowledge.add_contents_async(
-        paths=["./大数据风控实战课程.pdf"],
+        paths=["../大数据风控实战课程.pdf"],
         reader=PDFReader(
             name="Agentic Chunking Reader",
             chunking_strategy=AgenticChunking(

@@ -18,7 +18,7 @@ knowledge = Knowledge(
 )
 asyncio.run(
     knowledge.add_content_async(
-        path="./大数据风控实战课程.pdf",
+        path="../大数据风控实战课程.pdf",
         reader=PDFReader(
             name="Semantic Chunking Reader",
             chunking_strategy=SemanticChunking(
