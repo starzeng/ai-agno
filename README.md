@@ -1,11 +1,19 @@
 # ai-agno
 agno
 
-# python pip
+# python 命令
 ```shell
-pip freeze | xargs pip uninstall -y
+python -V
+
+python -m venv .venv
+
+.\.venv\Scripts\Activate.ps1 # windows
+source .venv/bin/activate # mac
+
+pip install --upgrade pip
 
 pip install -r requirements.txt 
  
 pip list --not-required --format=freeze > requirements.txt
+
 ```
