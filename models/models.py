@@ -3,7 +3,7 @@ import os
 import dotenv
 from agno.models.dashscope import DashScope
 
-from example.concepts.knowledge.dashscop_embedder import DashScopeEmbedder
+from my_ext.dashscop_embedder import DashScopeEmbedder
 
 dotenv.load_dotenv()
 API_KEY = os.getenv("API_KEY")
