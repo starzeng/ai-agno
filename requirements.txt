@@ -8,11 +8,11 @@ baidusearch==1.0.3
 Brotli==1.1.0
 chardet==5.2.0
 chonkie==1.4.0
-dashscope==1.24.7
+dashscope==1.24.8
 exa==0.5.26
 exa-py==1.15.6
 fake-useragent==2.2.0
-fastapi==0.119.0
+fastapi==0.120.0
 googlesearch-python==1.3.0
 h2==4.3.0
 httptools==0.6.4
@@ -25,7 +25,7 @@ Markdown==3.9
 openlit==1.35.4
 patchright==1.55.2
 pgvector==0.4.1
-pip==25.2
+pip==25.3
 psycopg==3.2.11
 psycopg-binary==3.2.10
 psycopg2-binary==2.9.10
@@ -40,6 +40,7 @@ snowballstemmer==2.2.0
 socksio==1.0.0
 tantivy==0.25.0
 tf-playwright-stealth==1.2.0
+toolbox-core==0.5.2
 torch==2.2.2
 transformers==4.57.1
 unstructured==0.18.15
