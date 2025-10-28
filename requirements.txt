@@ -9,6 +9,7 @@ Brotli==1.1.0
 chardet==5.2.0
 chonkie==1.4.0
 dashscope==1.24.8
+ddgs==9.6.1
 exa==0.5.26
 exa-py==1.15.6
 fake-useragent==2.2.0
