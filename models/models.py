@@ -55,7 +55,7 @@ QWEN_OMNI_TURBO_LATEST_2025_03_26 = DashScope(
     temperature=0.3,
 )
 
-QWEN_PLUS_2025_03_26 = DashScope(
+WAN22_T2V_PLUS = DashScope(
     id="wan2.2-t2v-plus",
     api_key=API_KEY,
     base_url=BASE_URL,
@@ -67,6 +67,14 @@ QWEN_IMAGE = DashScope(
     id="qwen-image",
     api_key=API_KEY,
     base_url="https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+)
+
+QWEN_PLUS = DashScope(
+    id="qwen-plus",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+    enable_thinking=False,
+    temperature=0.3,
 )
 
 QWEN_PLUS_2025_04_28 = DashScope(
