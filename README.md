@@ -12,8 +12,12 @@ source .venv/bin/activate # mac
 
 pip install -U pip
 
-pip install -r requirements.txt 
+pip install -r requirements.txt
+
+pip install -U -r requirements.txt
  
 pip list --not-required --format=freeze > requirements.txt
+
+pip list --not-required --format=freeze | cut -d '=' -f 1 > requirements.txt
 
 ```
