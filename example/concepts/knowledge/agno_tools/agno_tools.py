@@ -3,7 +3,7 @@ agno docs
 """
 
 from agno.agent import Agent
-from agno.knowledge.knowledge import Knowledge
+from agno.knowledge import Knowledge
 from agno.tools.knowledge import KnowledgeTools
 from agno.vectordb.lancedb import SearchType
 from agno.vectordb.milvus import Milvus

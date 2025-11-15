@@ -133,4 +133,12 @@ TEXT_EMBEDDING_V4 = DashScopeEmbedder(
     api_key=API_KEY,
     base_url=BASE_URL,
     dimensions=128,
+    enable_batch=True,  # 启用批处理
+    batch_size=10  # 每批处理 100 个文本
+)
+TEXT_EMBEDDING_V3 = DashScopeEmbedder(
+    id="text-embedding-v3",
+    api_key=API_KEY,
+    base_url=BASE_URL,
+    dimensions=128,
 )
