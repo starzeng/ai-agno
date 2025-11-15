@@ -10,7 +10,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1 # windows
 source .venv/bin/activate # mac
 
-pip install --upgrade pip
+pip install -U pip
 
 pip install -r requirements.txt 
  
