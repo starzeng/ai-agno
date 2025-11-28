@@ -1,5 +1,5 @@
 # ai-agno
-agno
+agno example
 
 # python 命令
 ```shell
