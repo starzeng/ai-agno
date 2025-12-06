@@ -1,3 +1,5 @@
+typing-extensions
+openai
 ag-ui-protocol==0.1.10
 agno==2.3.6
 agno-infra==1.0.5

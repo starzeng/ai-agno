@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from os import getenv
 from typing import Any, Dict, List, Optional, Tuple
 
 from agno.knowledge.embedder.base import Embedder
@@ -19,7 +20,7 @@ class DashScopeEmbedder(Embedder):
     dimensions: Optional[int] = None
     encoding_format: Literal["float", "base64"] = "float"
     user: Optional[str] = None
-    api_key: Optional[str] = None
+    api_key: Optional[str] = getenv("DASHSCOPE_API_KEY") or getenv("QWEN_API_KEY")
     organization: Optional[str] = None
     base_url: Optional[str] = None
     request_params: Optional[Dict[str, Any]] = None
